@@ -1,115 +1,214 @@
-# 📝 PasteBox MERN App
-🚀PasteBox: Secure, Ephemeral File Sharing — Built with the MERN Stack
-PasteBox is a modern file-sharing application designed for simplicity, privacy, and speed.
-It enables users to upload files and share them instantly using a 6-digit access code—without requiring accounts or leaving long-term storage traces.
+PasteBox 🚀
+
+Secure, ephemeral file sharing built with the MERN Stack.
+
+Upload a file, get a 6-digit access code, and share instantly. No accounts. No clutter. No traces.
+
+
 ---
-## 📌 Overview
-PasteBox focuses on secure and temporary file transfer. Files are automatically deleted based on configurable expiration rules such as time limits or download counts, ensuring minimal storage footprint and enhanced privacy.
 
-## ✨ Key Features
-Create and save text snippets (pastes)
-- Generate shareable links
-- Copy to clipboard
-- Simple and responsive UI
-- REST API backend
+📌 Overview
 
-## 🏗️ Project Architecture
+PasteBox is a modern file-sharing application focused on simplicity, privacy, and speed.
+
+Files are automatically deleted based on configurable expiration rules such as:
+
+Time-based expiry
+
+Download count limits
+
+Optional password protection
+
+
+This ensures minimal storage footprint and stronger privacy.
+
+
+---
+
+✨ Features
+
+📝 Text Snippets support
+
+🔗 Shareable links with 6-digit access codes
+
+📋 One-click copy to clipboard
+
+🔐 Password-protected file sharing
+
+⏱️ Auto-expiration by time or download count
+
+📱 QR Code generation for instant mobile access
+
+🗂️ MongoDB GridFS file storage
+
+📊 Download tracking and limits
+
+
+
+---
+
+🏗 Project Structure
+
 pastebox-mern/
-├── server/ # Backend (Node.js, Express)
-│ ├── index.js # Application entry point
-│ ├── models/ # Database schemas
-│ ├── routes/ # API route handlers
-│ └── .env # Environment configuration
+├── server/                 # Backend — Node.js & Express
+│   ├── index.js            # Application entry point
+│   ├── models/             # Mongoose schemas
+│   ├── routes/             # API route handlers
+│   └── .env                # Environment configuration
 │
-├── client/ # Frontend (React)
-│ ├── public/ # Static assets
-│ └── src/
-│ ├── components/ # Reusable UI components
-│ ├── pages/ # Application pages
-│ └── App.js # Root component
+├── client/                 # Frontend — React 18
+│   ├── public/             # Static assets
+│   └── src/
+│       ├── components/     # Reusable UI components
+│       ├── pages/          # Application pages
+│       └── App.js          # Root component
 │
-└── package.json # Project configuration
+└── package.json            # Project configuration
 
-## ⚙️ Installation & Setup
 
-### 
+---
+
+⚙️ Installation
+
 1. Clone the repository
--git clone https://github.com/your-username/PasteBox.git
 
-2.Install backend dependencies
-- cd server
-- npm install
-- npm start
+git clone https://github.com/your-username/PasteBox.git
 
-3. Install frontend dependencies
-- cd client
-- npm install
-- npm run dev
+2. Install and start backend
 
-🔐 Environment Configuration
-Create a .env file in the /server directory:
+cd server
+npm install
+npm start
+
+3. Install and start frontend
+
+cd client
+npm install
+npm run dev
+
+
+---
+
+🔧 Environment Variables
+
+Create a .env file inside the /server directory:
+
 MONGO_URI=your_mongodb_connection_string
 PORT=5000
 CLIENT_URL=http://localhost:3000
 
-# API Reference
-## API Endpoints
-
-| Method | Endpoint                         | Description                  |
-|--------|----------------------------------|------------------------------|
-| POST   | /api/files/upload               | Upload a file               |
-| POST   | /api/files/verify               | Validate access code        |
-| GET    | /api/files/download/:code       | Download file               |
-| GET    | /api/files/status/:code         | Retrieve file status        |
-| GET    | /api/health                     | Health check endpoint       |
-
-## 🔄 Application Workflow
-
-### 📤 File Upload
-- User uploads a file via the client interface  
-- File is stored in MongoDB using GridFS  
-- A unique 6-digit access code is generated  
-- The system returns:
-  - Access code  
-  - Shareable link  
-  - QR code  
-  - Expiration details  
 
 ---
 
-### 📥 File Download
-- User enters the access code  
-- System validates:
-  - Expiry status  
-  - Download limit  
-  - Password (if applicable)  
-- File is securely streamed to the user  
+📡 API Reference
 
-## 🧠 System Design
+Method	Endpoint	Description
 
-- **Storage:** MongoDB GridFS (chunk-based file storage)
+POST	/api/files/upload	Upload a file to GridFS
+POST	/api/files/verify	Validate an access code
+GET	/api/files/download/:code	Stream file to client
+GET	/api/files/status/:code	Retrieve file metadata
+GET	/api/health	Server health check
 
-- **Metadata Includes:**
-  - Expiration timestamp  
-  - Download count tracking  
-  - Encrypted password (optional)  
 
-- Expired files are flagged and can be removed using scheduled cleanup processes.
 
-## 🛠️ Technology Stack
+---
 
-| Layer        | Technologies |
-|--------------|-------------|
-| Frontend     | React 18, React Router v6, Axios |
-| Backend      | Node.js, Express |
-| Database     | MongoDB Atlas (GridFS) |
-| ODM          | Mongoose |
-| File Upload  | Multer |
-| Security     | bcryptjs |
-| Utilities    | qrcode |
-| Dev Tools    | nodemon, concurrently |
+🔄 Application Workflow
 
-## 🚀 Production Deployment
+📤 Upload Flow
+
+1. User uploads file via client UI
+
+
+2. File stored in MongoDB using GridFS
+
+
+3. Unique 6-digit access code generated
+
+
+4. Returns code, shareable link, and QR code
+
+
+5. Expiration metadata attached to record
+
+
+
+📥 Download Flow
+
+1. Recipient enters the 6-digit code
+
+
+2. System validates expiry timestamp
+
+
+3. Download count is checked
+
+
+4. Password verified if applicable
+
+
+5. File is securely streamed to the user
+
+
+
+
+---
+
+🗄 System Design
+
+Storage & Metadata
+
+MongoDB GridFS → Chunk-based large file storage
+
+Expiration Tracking → Auto-cleanup scheduling support
+
+Download Counting → Max download enforcement
+
+Encrypted Passwords → bcryptjs-based secure access
+
+
+
+---
+
+🛠 Tech Stack
+
+Frontend
+
+React 18
+
+React Router v6
+
+Axios
+
+
+Backend
+
+Node.js
+
+Express.js
+
+MongoDB Atlas
+
+GridFS
+
+Mongoose
+
+Multer
+
+bcryptjs
+
+qrcode
+
+nodemon
+
+
+
+---
+
+🚀 Deployment
+
+Production Build
 
 npm run build
 NODE_ENV=production node server/index.js
@@ -117,21 +216,42 @@ NODE_ENV=production node server/index.js
 
 ---
 
-## 🔮 Roadmap
+🛣 Roadmap
 
-- Automated GridFS cleanup using cron jobs  
-- File analytics and usage dashboard  
-- One-time secure download links  
-- Drag-and-drop file upload interface  
-- Cloud deployment (AWS, Vercel, Render)  
+⏰ Automated GridFS cleanup using cron jobs
 
-## 👤 Author
+📊 File analytics and usage dashboard
 
-**Satyasagar Sahoo**  
-🔗 https://in.linkedin.com/in/satyasagarsahoo  
+🔗 One-time secure download links
+
+🖱 Drag-and-drop upload interface
+
+☁️ Cloud deployment (AWS, Vercel, Render)
+
+
 
 ---
 
-## 📄 License
+👨‍💻 Author
 
-This project is licensed under the **MIT License**.
+Satyasagar Sahoo
+
+🔗 LinkedIn: https://in.linkedin.com/in/satyasagarsahoo
+
+
+---
+
+📜 License
+
+This project is released under the MIT License.
+
+Free for personal and commercial use.
+
+
+---
+
+⭐ Support
+
+If you like this project, please give it a star on GitHub ⭐
+
+It helps a lot.
